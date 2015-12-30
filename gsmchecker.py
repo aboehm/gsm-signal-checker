@@ -17,7 +17,7 @@
 # ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-import sys, serial, traceback, datetime, gobject, json
+import os, sys, serial, traceback, datetime, gobject, json
 from optparse import OptionParser, OptionGroup
 import json
 
@@ -28,13 +28,17 @@ class ATTermSession:
 		self.timeout = timeout
 
 	def execute(self, command):
-		modem = serial.Serial(self.device, self.baudrate, timeout=self.timeout)
-		modem.write(("%s\r" % (command)).encode())
-		modem.flush()
-		at_resp = modem.read(1024)
-		at_resp = at_resp.split('\r\n')
-		modem.close()
-		return at_resp
+		try:
+			modem = serial.Serial(self.device, self.baudrate, timeout=self.timeout)
+			modem.write(("%s\r" % (command)).encode())
+			modem.flush()
+			at_resp = modem.read(1024)
+			at_resp = at_resp.split('\r\n')
+			modem.close()
+			return at_resp
+
+		except:
+			return []
 
 	def getDevice(self):
 		return self.device
@@ -186,11 +190,11 @@ class SignalService:
 
 class TraySignalService(SignalService):
 	mappings = {
-			None: "/usr/share/icons/Adwaita/64x64/status/network-cellular-signal-none-symbolic.symbolic.png",
-			"Marginal": "/usr/share/icons/Adwaita/64x64/status/network-cellular-signal-weak-symbolic.symbolic.png",
-			"OK": "/usr/share/icons/Adwaita/64x64/status/network-cellular-signal-ok-symbolic.symbolic.png",
-			"Good": "/usr/share/icons/Adwaita/64x64/status/network-cellular-signal-good-symbolic.symbolic.png",
-			"Excellent": "/usr/share/icons/Adwaita/64x64/status/network-cellular-signal-excellent-symbolic.symbolic.png",
+			None: "none.png",
+			"Marginal": "weak.png",
+			"OK": "ok.png",
+			"Good": "good.png",
+			"Excellent": "excellent.png",
 	}
 
 	def __init__(self, session, interval=60):
@@ -198,6 +202,17 @@ class TraySignalService(SignalService):
 		self.symbol = gtk.status_icon_new_from_file(TraySignalService.mappings[None])
 		self.symbol.set_tooltip('Waiting for information')
 		self.symbol.connect('popup-menu', self.onRightClick)
+
+		for k in self.mappings:
+			try:
+				s = "%s/.gsmchecker/icons/%s" % (os.getenv('HOME'), self.mappings[k])
+				open(s, "r").close()
+				self.mappings[k] = s
+
+			except:
+				self.mappings[k] = "data/icons/%s" % (self.mappings[k])
+
+		print self.mappings
 
 	def start(self):
 		SignalService.start(self)

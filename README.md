@@ -26,3 +26,21 @@ GSM signal checker detects if you using X and start as tray. If no X detected
 the checker starts in text mode. JSON as output format is support. For further
 help look into the source.
 
+### Own icon set
+
+Own icon set can be placed in your home directory under .gsmchecker/icons/ with
+following pngs:
+
+none.png	No connection detected
+weak.png	Weak signal
+ok.png		Ok signal
+good.png	Good signal
+excellent.png	Excellent signal
+
+## Additional Sources
+
+All icons in data/icons/ are from the Adwaita-Theme licensed under Creative
+Commons Attribution-Share Alike 3.0.
+(https://github.com/GNOME/adwaita-icon-theme)
+
+
