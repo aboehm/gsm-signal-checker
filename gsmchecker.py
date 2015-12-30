@@ -212,8 +212,6 @@ class TraySignalService(SignalService):
 			except:
 				self.mappings[k] = "data/icons/%s" % (self.mappings[k])
 
-		print self.mappings
-
 	def start(self):
 		SignalService.start(self)
 		gtk.main()
