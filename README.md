@@ -31,11 +31,11 @@ help look into the source.
 Own icon set can be placed in your home directory under .gsmchecker/icons/ with
 following pngs:
 
-none.png	No connection detected
-weak.png	Weak signal
-ok.png		Ok signal
-good.png	Good signal
-excellent.png	Excellent signal
+	none.png	No connection detected
+	weak.png	Weak signal
+	ok.png		Ok signal
+	good.png	Good signal
+	excellent.png	Excellent signal
 
 ## Additional Sources
 
