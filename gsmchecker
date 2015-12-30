@@ -1,0 +1,15 @@
+#!/bin/sh
+
+PARENT="."
+LINK=`readlink $0`
+
+if [ "$LINK" ] ; then
+	PARENT=`dirname $LINK`
+else
+	PARENT=`dirname $0`
+fi
+
+test -d "$PARENT" || exit 0
+cd $PARENT
+./gsmchecker.py $*
+
