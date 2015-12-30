@@ -9,7 +9,7 @@ A signal strength checker for GSM modems by Alexander Böhm (2015)
 * pyGTK (for GUI mode)
 
 ## Usage
-	gsmchecker.py [options] /dev/modem
+	gsmchecker [options] /dev/modem
 
 	Options:
 	--version     show program's version number and exit
